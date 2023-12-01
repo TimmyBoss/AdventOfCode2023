@@ -29,12 +29,14 @@ namespace AdventOfCode2023.Day01.ConsoleApp
 
             foreach (string row in _puzzleInput)
             {
-                var numbers = Regex.Matches(row, @"one|two|three|four|five|six|seven|eight|nine|\d")
+                var normalRow = Regex.Matches(row, @"one|two|three|four|five|six|seven|eight|nine|\d")
+                    .Select(m => m.Value).ToArray();
+                var reverseRow = Regex.Matches(GetReversedString(row), @"eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|\d")
                     .Select(m => m.Value).ToArray();
 
-                var number = ReplaceWithDigit(numbers[0]) + ReplaceWithDigit(numbers[numbers.Length - 1]);
-
-                //    Console.WriteLine(row + "  --  " + number);
+                var firstItem = ReplaceWithDigit(normalRow[0]);
+                var lastItem = ReplaceWithDigit(reverseRow[0]);
+                var number = firstItem + lastItem;
 
                 total += Convert.ToInt32(number);
             }
@@ -42,19 +44,45 @@ namespace AdventOfCode2023.Day01.ConsoleApp
             return total.ToString();
         }
 
+        private string GetReversedString(string row)
+        {
+            char[] stringArray = row.ToCharArray();
+            Array.Reverse(stringArray);
+            string reversedStr = new string(stringArray);
+            return reversedStr;
+        }
+
         private string ReplaceWithDigit(string value)
         {
             switch (value)
             {
-                case "one": return "1";
-                case "two": return "2";
-                case "three": return "3";
-                case "four": return "4";
-                case "five": return "5";
-                case "six": return "6";
-                case "seven": return "7";
-                case "eight": return "8";
-                case "nine": return "9";
+                case "eno":
+                case "one":
+                    return "1";
+                case "owt":
+                case "two":
+                    return "2";
+                case "eerht":
+                case "three":
+                    return "3";
+                case "ruof":
+                case "four":
+                    return "4";
+                case "evif":
+                case "five":
+                    return "5";
+                case "xis":
+                case "six":
+                    return "6";
+                case "neves":
+                case "seven":
+                    return "7";
+                case "thgie":
+                case "eight":
+                    return "8";
+                case "enin":
+                case "nine":
+                    return "9";
                 default: return value;
             }
         }
