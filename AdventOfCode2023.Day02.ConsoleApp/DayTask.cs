@@ -22,7 +22,23 @@ namespace AdventOfCode2023.Day02.ConsoleApp
 
         public string GetAnswer2()
         {
-            return "";
+            var totalAmount = 0;
+
+            foreach (var game in _games)
+            {
+                var power = 1;
+                var bag = new Bag();
+                bag.GetMinimalBagByGame(game);
+
+                foreach (var cubes in bag.Cubes)
+                {
+                    power *= cubes.Amount;
+                }
+
+                totalAmount += power;
+            }
+
+            return totalAmount.ToString();
         }
 
         public void SetupPuzzleInput(List<string> puzzleInput)
