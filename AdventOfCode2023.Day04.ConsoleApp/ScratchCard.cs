@@ -16,6 +16,8 @@
         public List<int> WinningNumbers { get; set; }
         public List<int> UserNumbers { get; set; }
 
+        public int AmountWon => UserNumbers.Count(w => WinningNumbers.Contains(w));
+
         public int GetCardNumber(string input)
         {
             int cardNumber = Convert.ToInt32(input.Replace("Card ", ""));
